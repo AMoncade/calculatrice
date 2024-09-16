@@ -1,83 +1,64 @@
-"""Flappy, game inspired by Flappy Bird.
+# Importez nos module
+import time
+import sys
 
-Exercises
+# Définition de nos fonctions mathématiques
+def add(a, b):
+    return a + b
 
-1. Keep score.
-2. Vary the speed.
-3. Vary the size of the balls.
-4. Allow the bird to move forward and back.
-"""
+def sous(a, b):
+    return a - b
 
-from random import *
-from turtle import *
+def mult(a, b):
+    return a * b
 
-from freegames import
+def div(a, b):
+    if b == "0":
+        print ("Une division par 0 est impossible")
+        sys.exit()
+    return a / b
 
-bird = vector(0, 0)
-balls = []
+def format():
+    print("\n" + "-" * 50 + "\n")
+    time.sleep(2)
 
+# Définition de la variable menu
+menu = "Opération possible: \n 1. Additioner ( + ) \n 2. Soustraire ( - ) \n 3. Multiplication ( * ) \n 4. Division   ( / ) \n 5. Quitter la calculatrice \n Veuillez choisir votre opération: "
 
-def tap(x, y):
-    """Move bird up in response to screen tap."""
-    up = vector(0, 30)
-    bird.move(up)
-
-
-def inside(point):
-    """Return True if point on screen."""
-    return -200 < point.x < 200 and -200 < point.y < 200
-
-
-def draw(alive):
-    """Draw screen objects."""
-    clear()
-
-    goto(bird.x, bird.y)
-
-    if alive:
-        dot(10, 'green')
+# Créer le méchanisme de la calculatrice
+while True:
+    op = input(menu)
+    if op == "5":
+        print ("Merci d'avoir utiliser ma calculatrice :) ")
+        break
+    num1 = input("Veuillez rentrer votre premier nombre: ")
+    if not num1.isdigit():
+        print ("Veuillez rentrer seulement des nombres!")
+        pass
+    num2 = input("Veuillez rentrer votre deuxième nombre: ")
+    if not num2.isdigit():
+        print ("Veuillez rentrer seulement des nombres!")
+        pass
+    if op == "1":
+        print (add(num1, num2))
+        format()
+    elif op == "2":
+        print (sous(num1, num2))
+        format()
+    elif op == "3":
+        print (mult(num1, num2))
+        format()
+    elif op == "4":
+        print (div(num1, num2))
+        format()
     else:
-        dot(10, 'red')
+        print ("Veuillez choisir une option valide (Valeur entre 1 et 5)")
+        pass
 
-    for ball in balls:
-        goto(ball.x, ball.y)
-        dot(20, 'black')
-
-    update()
+format()
 
 
-def move():
-    """Update object positions."""
-    bird.y -= 5
-
-    for ball in balls:
-        ball.x -= 3
-
-    if randrange(10) == 0:
-        y = randrange(-199, 199)
-        ball = vector(199, y)
-        balls.append(ball)
-
-    while len(balls) > 0 and not inside(balls[0]):
-        balls.pop(0)
-
-    if not inside(bird):
-        draw(False)
-        return
-
-    for ball in balls:
-        if abs(ball - bird) < 15:
-            draw(False)
-            return
-
-    draw(True)
-    ontimer(move, 50)
 
 
-setup(420, 420, 370, 0)
-hideturtle()
-up()
-tracer(False)
-onscreenclick(tap)
-move()
-done()
+
+
